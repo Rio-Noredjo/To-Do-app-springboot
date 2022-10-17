@@ -15,21 +15,21 @@ public class Address {
     @Column(name="id")
     private Long id;
 
-    @Column(name="street")
-    private String street;
+    @Column(name="state")
+    private String state;
 
     @Column(name="city")
     private String city;
 
-    @Column(name="state")
-    private String state;
-
-    @Column(name="country")
-    private String country;
+    @Column(name="street")
+    private String street;
 
     @Column(name="zip_code")
     private String zipCode;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "country_id", referencedColumnName = "id")
+    private Country country;
 }
 
 
