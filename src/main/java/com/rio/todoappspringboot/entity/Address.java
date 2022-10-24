@@ -27,7 +27,7 @@ public class Address {
     @Column(name="zip_code")
     private String zipCode;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
 }
