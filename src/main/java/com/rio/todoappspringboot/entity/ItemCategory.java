@@ -21,4 +21,10 @@ public class ItemCategory {
     @Column(name = "category_id")
     Long categoryIid;
 
+    public ItemCategory(Long itemId, Long categoryIid) {
+        this.itemId = itemId;
+        this.categoryIid = categoryIid;
+    }
+
+    public ItemCategory() {}
 }
