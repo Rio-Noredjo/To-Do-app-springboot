@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/items")
 public class ItemController {
@@ -44,33 +46,27 @@ public class ItemController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
+    @GetMapping("/all-user-items/{userId}")
+    public ResponseEntity<List<ItemDto>> getAllUserItems(@PathVariable("userId") Long userId) {
+        List<ItemDto> itemDtoList = itemService.getAllUserItems(userId);
+        return new ResponseEntity<>(itemDtoList, HttpStatus.OK);
+    }
 
-
-/*    @GetMapping("/all-users")
-    public ResponseEntity<?> getAll() {
-        List<User> userList = userService.getAll();
-        if (userList.isEmpty()) {
+    @GetMapping("/all-items")
+    public ResponseEntity<List<ItemDto>> getAllItems() {
+        List<ItemDto> itemDtoList = itemService.getAllItems();
+        if (itemDtoList.isEmpty()) {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+        return new ResponseEntity<>(itemDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
-        User user = userService.getUserById(id);
-        if (user == null) {
-            return new ResponseEntity<>("No user found with id: " + id,HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @DeleteMapping(value="/delete-user/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
-        boolean isRemoved = userService.deleteUser(id);
+    @DeleteMapping(value="/delete-item/{itemId}")
+    public ResponseEntity<?> deleteItem(@PathVariable("itemId") Long itemId) {
+        boolean isRemoved = itemService.deleteItem(itemId);
         if (!isRemoved) {
-            return new ResponseEntity<>("User with Id: " + id + " not deleted or found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Item with Id: " + itemId + " not deleted or found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(id, HttpStatus.OK);
-    }*/
-
+        return new ResponseEntity<>(itemId, HttpStatus.OK);
+    }
 }

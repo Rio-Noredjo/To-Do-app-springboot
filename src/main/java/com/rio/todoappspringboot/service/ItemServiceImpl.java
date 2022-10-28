@@ -50,26 +50,31 @@ public class ItemServiceImpl implements ItemService {
         return newItem;
     }
 
-    @Override
-    public List<Item> getAll() {
-        return null;
-    }
 
-    @Override
-    public Item getItemById(Long id) {
-        return null;
-    }
-
+    @Transactional
     @Override
     public boolean deleteItem(Long id) {
-        return false;
+        ItemDto itemDto = findById(id);
+        boolean isRemoved = false;
+        if(itemDto == null){
+            return isRemoved;
+        } else {
+            List<ItemCategory> itemCategoryListOld = itemCategoryRepository.deleteByItemId(itemDto.getItem().getId());
+            if(itemCategoryListOld.isEmpty()){
+                return isRemoved;
+            } else {
+                itemRepository.deleteById(itemDto.getItem().getId());
+                isRemoved = true;
+            }
+        }
+        return isRemoved;
     }
 
+    @Transactional
     @Override
     public ItemDto findById(Long itemId) {
         Optional<Item> item = itemRepository.findById(itemId);
         Item itemDb = item.get();
-        if(itemDb != null){
             List<ItemCategory> itemCategories = itemCategoryRepository.findByItemId(itemDb.getId());
             ArrayList<Category> categoryArrayList = new ArrayList<>();
             List<Category> categoryList = categoryRepository.findAll();
@@ -83,21 +88,64 @@ public class ItemServiceImpl implements ItemService {
             }
             ItemDto itemDto = new ItemDto(itemDb, categoryArrayList);
             return itemDto;
-        }
-        return null;
+
     }
 
-    @Override
     @Transactional
-    public Item updateItem(ItemDto ItemDto) {
-        List<ItemCategory> itemCategoryListOld = itemCategoryRepository.deleteByItemId(ItemDto.getItem().getId());
+    @Override
+    public Item updateItem(ItemDto itemDto) {
+        List<ItemCategory> itemCategoryListOld = itemCategoryRepository.deleteByItemId(itemDto.getItem().getId());
         if(itemCategoryListOld.size() > 0){
-            ItemDto.getCategories().forEach(category ->
-                itemCategoryRepository.save(new ItemCategory(ItemDto.getItem().getId(), category.getId()))
+            itemDto.getCategories().forEach(category ->
+                itemCategoryRepository.save(new ItemCategory(itemDto.getItem().getId(), category.getId()))
         );
         }
-        Item item = itemRepository.save(ItemDto.getItem());
-        return item;
+        return itemRepository.save(itemDto.getItem());
     }
 
+    @Transactional
+    @Override
+    public List<ItemDto> getAllUserItems(Long userId) {
+        List<Item> items = itemRepository.findAllByUserId(userId);
+        List<Category> categoryList = categoryRepository.findAll();
+        List<ItemDto> itemDb= new ArrayList<>();
+
+        for (int i = 0; i < items.size(); i++) {
+            List<ItemCategory> itemCategories = itemCategoryRepository.findByItemId(items.get(i).getId());
+            ArrayList<Category> categoryArrayList = new ArrayList<>();
+            for (int x = 0; x < itemCategories.size(); x++) {
+                for(int y = 0; y < categoryList.size(); y++){
+                    if(Objects.equals(itemCategories.get(x).getCategoryIid(), categoryList.get(y).getId())){
+                        categoryArrayList.add(categoryList.get(y));
+                    }
+                }
+            }
+            itemDb.add(new ItemDto(items.get(i), categoryArrayList));
+        }
+        return itemDb;
+    }
+
+    @Transactional
+    @Override
+    public List<ItemDto> getAllItems() {
+        List<Item> items = itemRepository.findAll();
+        List<Category> categoryList = categoryRepository.findAll();
+        List<ItemDto> itemDb= new ArrayList<>();
+
+        for (int i = 0; i < items.size(); i++) {
+            List<ItemCategory> itemCategories = itemCategoryRepository.findByItemId(items.get(i).getId());
+            ArrayList<Category> categoryArrayList = new ArrayList<>();
+            for (int x = 0; x < itemCategories.size(); x++) {
+                for(int y = 0; y < categoryList.size(); y++){
+                    if(Objects.equals(itemCategories.get(x).getCategoryIid(), categoryList.get(y).getId())){
+                        categoryArrayList.add(categoryList.get(y));
+                    }
+                }
+            }
+            itemDb.add(new ItemDto(items.get(i), categoryArrayList));
+        }
+        return itemDb;
+    }
 }
+
+
