@@ -18,7 +18,7 @@ public class ItemController {
     }
 
     @PostMapping("/add/{userId}")
-    public ResponseEntity<?> addUser(@PathVariable("userId") Long userId, @RequestBody ItemDto newItem) {
+    public ResponseEntity<?> addItem(@PathVariable("userId") Long userId, @RequestBody ItemDto newItem) {
         Item item = itemService.addItem(newItem, userId);
         if (item == null) {
             return new ResponseEntity<>("Failed to add item" ,HttpStatus.NOT_FOUND);
@@ -26,21 +26,27 @@ public class ItemController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-/*    @PutMapping(value ="/update")
-    public ResponseEntity<?> update(@RequestBody User existingUser) {
-        User user = userService.updateUser(existingUser);
-        if (user == null) {
-            return new ResponseEntity<>("Failed to update user" ,HttpStatus.NOT_FOUND);
+    @GetMapping("/get-item/{itemId}")
+    public ResponseEntity<ItemDto> findUserByEmail(@PathVariable("itemId") Long itemId){
+        ItemDto itemDto = itemService.findById(itemId);
+        if (itemDto == null) {
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(itemDto, HttpStatus.OK);
     }
 
-    @GetMapping("/find-by-email/{emailAddress}")
-    public ResponseEntity<User> findUserByEmail(@PathVariable("emailAddress") String emailAddress){
-        return new ResponseEntity<>(userService.findByEmail(emailAddress), HttpStatus.OK);
+    @PutMapping(value ="/update")
+    public ResponseEntity<?> updateItem(@RequestBody ItemDto existingItem) {
+        Item item = itemService.updateItem(existingItem);
+        if (item == null) {
+            return new ResponseEntity<>("Failed to update item" ,HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    @GetMapping("/all-users")
+
+
+/*    @GetMapping("/all-users")
     public ResponseEntity<?> getAll() {
         List<User> userList = userService.getAll();
         if (userList.isEmpty()) {

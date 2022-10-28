@@ -8,6 +8,11 @@ import java.util.ArrayList;
 @Data
 public class ItemDto {
     private Item item;
-    private ArrayList<Category> categories = new ArrayList<>();
+    private ArrayList<Category> categories;
+
+    public ItemDto(Item item, ArrayList<Category> categories) {
+        this.item = item;
+        this.categories = categories;
+    }
 
 }
