@@ -53,6 +53,15 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User getUserByEmailAndPassword(String email, String password) {
+        User user = userRepository.findByEmailAndPassword(email, password);
+        if(user != null){
+            return user;
+        }
+        return null;
+    }
+
     @Transactional
     @Override
     public boolean deleteUser(Long id) {

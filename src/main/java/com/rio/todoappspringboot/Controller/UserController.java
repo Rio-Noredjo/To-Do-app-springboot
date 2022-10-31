@@ -58,6 +58,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
+    @GetMapping("/user/user-email-password/{email}/{password}")
+    public ResponseEntity<User> getUserByEmailAndPassword(@PathVariable("email") String email,@PathVariable("password") String password) {
+        User user = userService.getUserByEmailAndPassword(email, password);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @DeleteMapping(value="/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         boolean isRemoved = userService.deleteUser(id);
