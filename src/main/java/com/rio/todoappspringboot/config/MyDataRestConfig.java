@@ -30,7 +30,6 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         entityManager = theEntityManager;
     }
 
-
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
 
@@ -56,23 +55,16 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
     }
 
+    // Expose the id of an entity when sending a json object to the front end
     private void exposeIds(RepositoryRestConfiguration config) {
-
-        // expose entity ids
-        //
-
-        // - get a list of all entity classes from the entity manager
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 
-        // - create an array of the entity types
         List<Class> entityClasses = new ArrayList<>();
 
-        // - get the entity types for the entities
-        for (EntityType tempEntityType : entities) {
-            entityClasses.add(tempEntityType.getJavaType());
+        for (EntityType entityType : entities) {
+            entityClasses.add(entityType.getJavaType());
         }
 
-        // - expose the entity ids for the array of entity/domain types
         Class[] domainTypes = entityClasses.toArray(new Class[0]);
         config.exposeIdsFor(domainTypes);
     }

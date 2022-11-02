@@ -5,9 +5,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="category")
 @Getter
 @Setter
+@Table(name="category")
 public class Category {
 
     @Id

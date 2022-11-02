@@ -5,9 +5,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="item_category")
 @Getter
 @Setter
+@Table(name="item_category")
 public class ItemCategory {
 
     @Id
@@ -19,12 +19,13 @@ public class ItemCategory {
     Long itemId;
 
     @Column(name = "category_id")
-    Long categoryIid;
+    Long categoryId;
 
-    public ItemCategory(Long itemId, Long categoryIid) {
+    public ItemCategory(Long itemId, Long categoryId) {
         this.itemId = itemId;
-        this.categoryIid = categoryIid;
+        this.categoryId = categoryId;
     }
 
     public ItemCategory() {}
+
 }

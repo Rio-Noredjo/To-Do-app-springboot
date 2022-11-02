@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="item")
 @Getter
 @Setter
+@Table(name="item")
 public class Item {
 
     @Id

@@ -21,8 +21,7 @@ public class MyAppConfig implements WebMvcConfigurer {
         cors
                 .addMapping(basePath + "/**")
                 .allowedOrigins(theAllowedOrigins)
-                .allowedHeaders("Requestor-Type",
-                        "Access-Control-Allow-Headers",
+                .allowedHeaders("Access-Control-Allow-Headers",
                         "Access-Control-Allow-Origin",
                         "Access-Control-Request-Method",
                         "Access-Control-Request-Headers",
@@ -30,8 +29,7 @@ public class MyAppConfig implements WebMvcConfigurer {
                         "Cache-Control",
                         "Content-Type",
                         "Authorization")
-                .allowedMethods("GET", "POST", "PUT", "DELETE")
-                .exposedHeaders("X-Get-Header");
+                .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 }
 

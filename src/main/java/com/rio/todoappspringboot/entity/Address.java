@@ -5,9 +5,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="address")
 @Getter
 @Setter
+@Table(name="address")
 public class Address {
 
     @Id
@@ -30,6 +30,7 @@ public class Address {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     private Country country;
+
 }
 
 

@@ -5,9 +5,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="country")
 @Getter
 @Setter
+@Table(name="country")
 public class Country {
 
     @Id
@@ -20,4 +20,5 @@ public class Country {
 
     @Column(name="name")
     private String name;
+
 }

@@ -11,7 +11,7 @@ public interface UserService {
 
     User updateUser(User user);
 
-    User findByEmail(String emailAddress);
+    User getByEmail(String emailAddress);
 
     List<User> getAll();
 

@@ -6,11 +6,11 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-public class ItemDto {
+public class ItemCategories {
     private Item item;
     private ArrayList<Category> categories;
 
-    public ItemDto(Item item, ArrayList<Category> categories) {
+    public ItemCategories(Item item, ArrayList<Category> categories) {
         this.item = item;
         this.categories = categories;
     }
