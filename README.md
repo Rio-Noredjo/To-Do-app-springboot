@@ -22,7 +22,6 @@ The to do application is a application where a user can perform CRUD on differen
 * Open the starter files directory
 * Run the SQL script: create-user.sql in the MySQL Workbench
 * Run the  SQL script: create_tables.sql in the MySQL Workbench
-* Clone the project to your local machine
 * Download the project from GitHub or run the command in your terminal
 ```
 $ git clone https://github.com/Rio-Noredjo/To-Do-app-springboot.git
