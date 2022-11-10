@@ -1,16 +1,16 @@
 # To-Do application (Springboot)
 
-This is the back-end of the to-do application. See https://github.com/Rio-Noredjo/To-Do-app-angular for the front-end of the application. 
+This is the back-end of the To-Do application. See https://github.com/Rio-Noredjo/To-Do-app-angular for the front-end of the application. 
 
 ## Description
 
-The to do application is a application where a user can perform CRUD on different objects. The goal of this application is to show my skills as a full-stack java developer.
+The To-Do application is a application where a user can perform CRUD on different objects. The goal of this application is to show my skills as a full-stack java developer.
 
 ## Getting Started
 
 ### Dependencies
 
-* MySQL workbench
+* MySQL Workbench
 * Angular CLI
 * Java 17
 * Springboot 2.7.4
