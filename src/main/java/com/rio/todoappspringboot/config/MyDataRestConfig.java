@@ -10,7 +10,6 @@ import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.EntityType;
 import java.util.ArrayList;
@@ -36,15 +35,15 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         HttpMethod[] theUnsupportedActions = {HttpMethod.PUT, HttpMethod.POST,
                                               HttpMethod.DELETE, HttpMethod.PATCH};
 
-        // disable HTTP methods: PUT, POST, DELETE and PATCH
+        //Disable HTTP methods: PUT, POST, DELETE and PATCH
         disableHttpMethods(Category.class, config, theUnsupportedActions);
         disableHttpMethods(Country.class, config, theUnsupportedActions);
         disableHttpMethods(Item.class, config, theUnsupportedActions);
 
-        // call an internal helper method
+        //Expose the id of an entity
         exposeIds(config);
 
-        // configure cors mapping
+        //Configure cors mapping
         cors.addMapping(config.getBasePath() + "/**").allowedOrigins(theAllowedOrigins);
     }
 
@@ -55,7 +54,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
                 .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
     }
 
-    // Expose the id of an entity when sending a json object to the front end
+    //Expose the id of an entity when sending a JSON object to the front-end
     private void exposeIds(RepositoryRestConfiguration config) {
         Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
 
@@ -68,6 +67,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         Class[] domainTypes = entityClasses.toArray(new Class[0]);
         config.exposeIdsFor(domainTypes);
     }
+
 }
 
 

@@ -18,17 +18,17 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    /*Add user*/
+    //Add user
     @Transactional
     public User addUser(User newUser) {
         return userRepository.save(newUser);
     }
 
-    /*Update user*/
+    //Update user
     @Override
     public User updateUser(User existingUser) {
 
-        /*Get user. If not found return null else update user*/
+        //Get user, if not found return null else update user
         User user = getUserById(existingUser.getId());
         if(user == null){
             return null;
@@ -43,16 +43,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(emailAddress);
     }
 
-    /*Get all user order by id descending*/
+    //Get all user order by id descending
     @Override
     public List<User> getAll() {
         return userRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
-    /*Get user by id*/
+    //Get user by id
     @Override
     public User getUserById(Long id) {
-        /*Get user if not found return null*/
+
+        //Get user, if not found return null
         Optional<User> userResponse =  userRepository.findById(id);
         if(userResponse.isEmpty()){
             return null;
@@ -60,13 +61,13 @@ public class UserServiceImpl implements UserService {
         return userResponse.get();
     }
 
-    /*Get user by email address and password*/
+    //Get user by email address and password
     @Override
     public User getUserByEmailAndPassword(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
-    /*Delete user*/
+    //Delete user
     @Override
     public boolean deleteUser(Long id) {
         User user = getUserById(id);

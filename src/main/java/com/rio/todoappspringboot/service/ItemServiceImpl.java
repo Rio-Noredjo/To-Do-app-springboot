@@ -34,39 +34,39 @@ public class ItemServiceImpl implements ItemService {
         this.userService = userService;
     }
 
-    /*Add item*/
+    //Add item
     @Override
     public Item addItem(ItemCategories itemCategories, Long userId) {
 
-        /*Get user. If not found return null*/
+        /*Get user, if not found return null*/
         User user = userService.getUserById(userId);
         if(user == null){
             return null;
         }
 
-        /* Add the user to the new item and save the item in the database.*/
+        //Add user to the new item and save the item in database
         Item Item = itemCategories.getItem();
         Item.setUser(user);
         Item newItem = itemRepository.save(Item);
 
-        /* Save the item and categories in the join table item_category.*/
+        //Save item and categories in join table item_category
         itemCategories.getCategories().forEach(category ->
                     itemCategoryRepository.save(new ItemCategory(newItem.getId(), category.getId()))
         );
         return newItem;
     }
 
-    /* Delete item */
+    //Delete item
     @Override
     public boolean deleteItem(Long id) {
 
-        /*Get item and item categories. If not found return null*/
+        //Get item and item categories. If not found return null
         ItemCategories itemCategories = getItemById(id);
         if(itemCategories == null){
             return false;
         }
 
-        /*Delete all records from join table item_category by itemId. */
+        //Delete all records from join table item_category by itemId
         List<ItemCategory> itemCategoryList = itemCategoryRepository.deleteByItemId(itemCategories.getItem().getId());
             if(itemCategoryList.isEmpty()){
                 return false;
@@ -76,11 +76,11 @@ public class ItemServiceImpl implements ItemService {
         return true;
     }
 
-    /*Get item by id*/
+    //Get item by id
     @Override
     public ItemCategories getItemById(Long itemId) {
 
-        /*Get item. If not found return null*/
+        //Get item, if not found return null
         Optional<Item> item = itemRepository.findById(itemId);
         if(item.isEmpty()){
             return null;
@@ -88,14 +88,14 @@ public class ItemServiceImpl implements ItemService {
 
         Item itemDb = item.get();
 
-        /*Find all records from join table item_category by itemId. */
+        //Find all records from join table item_category by itemId
         List<ItemCategory> itemCategoryList = itemCategoryRepository.findByItemId(itemDb.getId());
         List<Category> categoryList = categoryRepository.findAll();
         ArrayList<Category> categoryArrayList = addCategoryArrayList(itemCategoryList, categoryList);
         return new ItemCategories(itemDb, categoryArrayList);
     }
 
-    /*Update item*/
+    //Update item
     @Override
     public Item updateItem(ItemCategories itemCategories) {
 
@@ -110,14 +110,14 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.save(itemCategories.getItem());
     }
 
-    /*Get all items by userId order items by id descending */
+    //Get all items by userId order items by id descending
     @Override
     public List<ItemCategories> getAllUserItems(Long userId) {
         List<Item> items = itemRepository.findAllByUserIdOrderByIdDesc(userId);
         return getAllItems(items);
     }
 
-    /*Get all items*/
+    //Get all items
     @Override
     public List<ItemCategories> getAll() {
         List<Item> items = itemRepository.findAll();
@@ -138,12 +138,12 @@ public class ItemServiceImpl implements ItemService {
         return categoryArrayList;
     }
 
-    /*Get all items and add the categories to the items */
+    //Get all items and add the categories to the items
     private List<ItemCategories> getAllItems(List<Item> items){
         List<Category> categoryList = categoryRepository.findAll();
         List<ItemCategories> itemCategoriesList= new ArrayList<>();
 
-        /*For each item get the item and categories from the join table item_category.
+        /*For each item get the item and categories from join table item_category.
          * Add the item and categories to the ItemCategories object */
         for (Item item : items) {
             List<ItemCategory> itemCategories = itemCategoryRepository.findByItemId(item.getId());
