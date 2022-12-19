@@ -18,13 +18,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    //Add user
     @Transactional
     public User addUser(User newUser) {
         return userRepository.save(newUser);
     }
 
-    //Update user
     @Override
     public User updateUser(User existingUser) {
 
@@ -37,23 +35,19 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    //Get user by email address
     @Override
     public User getByEmail(String emailAddress) {
         return userRepository.findByEmail(emailAddress);
     }
 
-    //Get all user order by id descending
     @Override
     public List<User> getAll() {
         return userRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
-    //Get user by id
     @Override
     public User getUserById(Long id) {
 
-        //Get user, if not found return null
         Optional<User> userResponse =  userRepository.findById(id);
         if(userResponse.isEmpty()){
             return null;
@@ -61,13 +55,11 @@ public class UserServiceImpl implements UserService {
         return userResponse.get();
     }
 
-    //Get user by email address and password
     @Override
     public User getUserByEmailAndPassword(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
 
-    //Delete user
     @Override
     public boolean deleteUser(Long id) {
         User user = getUserById(id);

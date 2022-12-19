@@ -18,14 +18,12 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    //Get all items by userId
     @GetMapping("/all-user-items/{userId}")
     public ResponseEntity<?> getAllUserItems(@PathVariable("userId") Long userId) {
         List<ItemCategories> itemCategoriesList = itemService.getAllUserItems(userId);
         return new ResponseEntity<>(itemCategoriesList, HttpStatus.OK);
     }
 
-    //Get all items
     @GetMapping("/all-items")
     public ResponseEntity<?> getAllItems() {
         List<ItemCategories> itemCategoriesList = itemService.getAll();
@@ -35,7 +33,6 @@ public class ItemController {
         return new ResponseEntity<>(itemCategoriesList, HttpStatus.OK);
     }
 
-    //Get item by itemId
     @GetMapping("/get-item/{itemId}")
     public ResponseEntity<?> getItemById(@PathVariable("itemId") Long itemId){
         ItemCategories itemCategories = itemService.getItemById(itemId);
@@ -45,7 +42,6 @@ public class ItemController {
         return new ResponseEntity<>(itemCategories, HttpStatus.OK);
     }
 
-    //Add item by userId
     @PostMapping("/add/{userId}")
     public ResponseEntity<?> addItem(@PathVariable("userId") Long userId, @RequestBody ItemCategories newItem) {
         Item item = itemService.addItem(newItem, userId);
@@ -55,7 +51,6 @@ public class ItemController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    //Update item
     @PutMapping(value ="/update")
     public ResponseEntity<?> updateItem(@RequestBody ItemCategories existingItem) {
         Item item = itemService.updateItem(existingItem);
@@ -65,7 +60,6 @@ public class ItemController {
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
-    //Delete item by itemId
     @DeleteMapping(value="/delete-item/{itemId}")
     public ResponseEntity<?> deleteItem(@PathVariable("itemId") Long itemId) {
         boolean isRemoved = itemService.deleteItem(itemId);

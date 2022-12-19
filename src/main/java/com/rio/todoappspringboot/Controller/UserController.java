@@ -17,14 +17,12 @@ public class UserController {
         this.userService = userService;
     }
 
-    //Get user by email address
     @GetMapping("/find-by-email/{emailAddress}")
     public ResponseEntity<User> findUserByEmail(@PathVariable("emailAddress") String email){
         User user = userService.getByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //Get all users
     @GetMapping("/all-users")
     public ResponseEntity<?> getAll() {
         List<User> userList = userService.getAll();
@@ -34,7 +32,6 @@ public class UserController {
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
-    //Get user by id
     @GetMapping("/user/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
@@ -44,14 +41,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //Get user by email address and password
     @GetMapping("/user/user-email-password/{email}/{password}")
     public ResponseEntity<User> getUserByEmailAndPassword(@PathVariable("email") String email,@PathVariable("password") String password) {
         User user = userService.getUserByEmailAndPassword(email, password);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //Add user
     @PostMapping("/add")
     public ResponseEntity<?> addUser(@RequestBody User newUser) {
         User user = userService.addUser(newUser);
@@ -61,7 +56,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //Update user
     @PutMapping(value ="/update")
     public ResponseEntity<?> updateUser(@RequestBody User existingUser) {
         User user = userService.updateUser(existingUser);
@@ -71,7 +65,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    //Delete user by id
     @DeleteMapping(value="/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         boolean isRemoved = userService.deleteUser(id);

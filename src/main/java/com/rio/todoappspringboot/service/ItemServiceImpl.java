@@ -34,7 +34,6 @@ public class ItemServiceImpl implements ItemService {
         this.userService = userService;
     }
 
-    //Add item
     @Override
     public Item addItem(ItemCategories itemCategories, Long userId) {
 
@@ -56,7 +55,6 @@ public class ItemServiceImpl implements ItemService {
         return newItem;
     }
 
-    //Delete item
     @Override
     public boolean deleteItem(Long id) {
 
@@ -76,11 +74,9 @@ public class ItemServiceImpl implements ItemService {
         return true;
     }
 
-    //Get item by id
     @Override
     public ItemCategories getItemById(Long itemId) {
 
-        //Get item, if not found return null
         Optional<Item> item = itemRepository.findById(itemId);
         if(item.isEmpty()){
             return null;
@@ -95,7 +91,6 @@ public class ItemServiceImpl implements ItemService {
         return new ItemCategories(itemDb, categoryArrayList);
     }
 
-    //Update item
     @Override
     public Item updateItem(ItemCategories itemCategories) {
 
@@ -110,14 +105,12 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.save(itemCategories.getItem());
     }
 
-    //Get all items by userId order items by id descending
     @Override
     public List<ItemCategories> getAllUserItems(Long userId) {
         List<Item> items = itemRepository.findAllByUserIdOrderByIdDesc(userId);
         return getAllItems(items);
     }
 
-    //Get all items
     @Override
     public List<ItemCategories> getAll() {
         List<Item> items = itemRepository.findAll();
